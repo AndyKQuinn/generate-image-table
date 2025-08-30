@@ -16,13 +16,13 @@ if [ -z "$IMAGE_VALUE" ]; then
     exit 1
 fi
 
-FULL_NAME=$(echo "$IMAGE_VALUE" | sed 's|https://artifactory.example-dns.com/examplerepo/||' | sed 's/-[0-9]*:.*//')
+FULL_NAME=$(echo "$IMAGE_VALUE" | sed 's|https://artifactory.com/examplerepo/||' | sed 's/-[0-9]*:.*//')
 DISPLAY_NAME=$(echo "$FULL_NAME" | awk -F '-' '{print toupper(substr($1,1,1)) tolower(substr($1,2))}')
 
 VERSION=$(echo "$IMAGE_URL" | awk -F '/' '{print $NF}' | sed 's/.*-//')
 
 if [ -z "$CI_PROJECT_DIR" ]; then
-    PROJECT_DIR="https://gitlab.exampmle.com/examplerepo/README.md"
+    PROJECT_DIR="https://gitlab.com/examplerepo/README.md"
 else
     PROJECT_DIR="$CI_PROJECT_DIR"
 fi
