@@ -28,6 +28,8 @@ else
 fi
 
 CSV_FILE="image-list.csv"
+HEADERS="Name,Version,Tag,Image URL,README"
+LINE="$DISPLAY_NAME,$VERSION,$CALCULATE_TAG,$IMAGE_URL,$PROJECT_DIR"
 
 if [ -f "$CSV_FILE" ]; then
     if grep -q "^$DISPLAY_NAME,$VERSION," "$CSV_FILE"; then
@@ -35,7 +37,7 @@ if [ -f "$CSV_FILE" ]; then
 
         while IFS= read -r line; do
             if [[ "$line" =~ ^$DISPLAY_NAME,$VERSION, ]]; then
-                echo "$DISPLAY_NAME,$VERSION,$CALCULATE_TAG,$IMAGE_URL,$PROJECT_DIR" >> "$temp_file"
+                echo "$LINE" >> "$temp_file"
             else
                 echo "$line" >> "$temp_file"
             fi
@@ -44,19 +46,13 @@ if [ -f "$CSV_FILE" ]; then
         mv "$temp_file" "$CSV_FILE"
         echo "Updated existing entry for $DISPLAY_NAME version $VERSION in CSV"
     else
-        echo "$DISPLAY_NAME,$VERSION,$CALCULATE_TAG,$IMAGE_URL,$PROJECT_DIR" >> "$CSV_FILE"
+        echo "$LINE" >> "$CSV_FILE"
         echo "Added new entry for $DISPLAY_NAME version $VERSION to CSV"
     fi
 else
-    echo "Name,Version,Tag,Image URL,README" > "$CSV_FILE"
-    echo "$DISPLAY_NAME,$VERSION,$CALCULATE_TAG,$IMAGE_URL,$PROJECT_DIR" >> "$CSV_FILE"
+    echo "$HEADERS" > "$CSV_FILE"
+    echo "$LINE" >> "$CSV_FILE"
     echo "Created new CSV file with entry for $DISPLAY_NAME version $VERSION"
 fi
-
-# cat > image-list.md << EOF
-# | Name | Version | Tag | Image URL | README |
-# |----------|---------|-----|-----------|---------|
-# | $DISPLAY_NAME | $VERSION | $CALCULATE_TAG | \`$IMAGE_URL\` | \`$PROJECT_DIR\` |
-# EOF
 
 exit 0
