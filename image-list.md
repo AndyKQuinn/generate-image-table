@@ -1,0 +1,3 @@
+| Name | Version | Tag | Image URL | README |
+|----------|---------|-----|-----------|---------|
+| Node | 22 | 08_30_2025-12_00 | `https://artifactory.example-dns.com/examplerepo/node-dev-container-22` | `https://gitlab.exampmle.com/examplerepo/README.md` |
